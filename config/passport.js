@@ -21,10 +21,10 @@ passport.use(
                 );
                 
 
-                // Pass the user object to Passport
+                
                 done(null, user.rows[0]);
-            } catch (err) { // Pass the error object to the catch block
-                done(err, null); // Handle the error gracefully
+            } catch (err) { 
+                done(err, null); 
             }
         }
     )

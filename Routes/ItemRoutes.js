@@ -5,20 +5,7 @@ const authenticateToken = require("../MiddleWares/AuthenticateToken");
 const router = express.Router();
 const pool = require('../config/db');
 const jwt = require('jsonwebtoken');
-
-
-const authenticate = (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Unauthorized' });
-
-    try {
-        const decoded = jwt.verify(token, process.env.jwt_secret);
-        req.user = decoded;
-        next();
-    } catch (err) {
-        res.status(403).json({ error: 'Forbidden' });
-    }
-};
+const authenticate = require('../MiddleWares/AuthenticateToken');
 
 router.get('/items', authenticate, async (req, res) => {
     const items = await pool.query('SELECT * FROM google_items WHERE google_users_id = $1', [

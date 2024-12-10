@@ -1,6 +1,5 @@
-const API_BASE = "http://localhost:4000"; // Change this to your backend URL
+const API_BASE = "http://localhost:4000"; 
 
-// Handle Login
 if (document.getElementById("loginForm")) {
     const loginForm = document.getElementById("loginForm");
     const loginMessage = document.getElementById("loginMessage");
@@ -9,7 +8,6 @@ if (document.getElementById("loginForm")) {
         e.preventDefault();
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        console.log(JSON.stringify({ username, password }));
         try {
             const response = await fetch(`${API_BASE}/auth/login`, {
                 method: "POST",
@@ -30,7 +28,6 @@ if (document.getElementById("loginForm")) {
     });
 }
 
-// Handle File Upload
 if (document.getElementById("fileUploadForm")) {
     const fileUploadForm = document.getElementById("fileUploadForm");
     const fileList = document.getElementById("fileList");
@@ -44,7 +41,7 @@ if (document.getElementById("fileUploadForm")) {
             const files = await response.json();
             fileList.innerHTML = files
                 .map((file) => `<li>${file.filename} <button onclick="deleteFile(${file.id})">Delete</button></li>`)
-                .join("");
+                .join("\n");
         } catch (error) {
             console.error("Error fetching files:", error);
         }
@@ -59,7 +56,7 @@ if (document.getElementById("fileUploadForm")) {
         formData.append("file", fileInput);
 
         try {
-            await fetch(`${API_BASE}/upload`, {
+            await fetch(`${API_BASE}/files/upload`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,
@@ -86,7 +83,6 @@ if (document.getElementById("fileUploadForm")) {
     fetchFiles();
 }
 
-// Handle Todos
 if (document.getElementById("addTodoButton")) {
     const todoInput = document.getElementById("todoInput");
     const todoList = document.getElementById("todoList");
