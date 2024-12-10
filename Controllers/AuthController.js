@@ -19,7 +19,8 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { username, password } = req.body;
     try {
-        const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+        const result = await pool.query("SELECT * FROM users");
+        console.log(username);
         if (result.rows.length === 0) {
             return res.status(400).json({ error: "Invalid credentials" });
         }
