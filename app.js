@@ -7,7 +7,14 @@ const itemRoutes = require("./Routes/ItemRoutes");
 
 const app = express();
 
+const passport = require('passport');
+const cors = require('cors');
+require('./config/passport');
+
+app.use(cors());
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
 
 app.use("/auth", authRoutes);
 app.use("/items", itemRoutes);
